@@ -30,9 +30,7 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         auth = Firebase.auth
-
         initClicks()
     }
 
@@ -46,9 +44,7 @@ class RegisterFragment : Fragment() {
 
         if (email.isNotEmpty()) {
             if (senha.isNotEmpty()) {
-
                 binding.progressBar.isVisible = true
-
                 registerUser(email,senha)
 
             } else {
@@ -69,8 +65,6 @@ class RegisterFragment : Fragment() {
                     binding.progressBar.isVisible = false
                 }
         }
-
-
 
     }
 
