@@ -29,8 +29,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="Criar conta"
-                    android:textColor="#283593" />
+                    android:text="@string/text_register_account"
+                    android:textColor="@color/white" />
 
             </androidx.appcompat.widget.Toolbar>
 
@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Senha"
+                android:text="@string/text_password"
                 android:textColor="@color/white" />
 
             <EditText
@@ -87,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/bg_button"
-                android:text="Criar conta"
+                android:text="@string/text_register_account"
                 android:textAllCaps="false"
                 android:textColor="@color/color_default"
                 app:backgroundTint="@null" />

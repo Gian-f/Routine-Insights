@@ -17,7 +17,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="E-mail"
+        android:text="@string/text_email"
         android:textColor="@color/white"/>
 
     <EditText
@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Senha"
+        android:text="@string/text_password"
         android:textColor="@color/white"/>
 
     <EditText
@@ -53,7 +53,7 @@
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="@string/text_btn_login_fragment"
         app:backgroundTint="@null"
         android:textColor="@color/color_default"
         android:layout_marginTop="16dp"
@@ -70,7 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingVertical="8dp"
-            android:text="Criar conta"
+            android:text="@string/text_register_account"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -81,7 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingVertical="8dp"
-            android:text="Esqueceu sua senha?"
+            android:text="@string/text_recover_login_fragment"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
