@@ -11,8 +11,8 @@ import com.example.todoapp.databinding.FragmentDoneBinding
 
 class DoneFragment : Fragment() {
 
-    private var _binding: FragmentDoneBinding? = null
-     private val binding get() = _binding!!
+    private var _binding : FragmentDoneBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
 
