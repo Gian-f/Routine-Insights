@@ -15,6 +15,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class LoginFragment : Fragment() {
+
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
@@ -72,7 +73,6 @@ class LoginFragment : Fragment() {
                     binding.progressBar.isVisible = false
                 }
             }
-
     }
 
     override fun onDestroyView() {
