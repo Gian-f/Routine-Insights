@@ -26,7 +26,13 @@
         android:id="@+id/homeFragment"
         android:name="com.example.todoapp.ui.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_authentication"
+            app:destination="@id/authentication"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <navigation android:id="@+id/authentication"
         app:startDestination="@id/loginFragment">
         <fragment
