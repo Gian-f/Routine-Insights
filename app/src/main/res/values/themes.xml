@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.ToDoApp" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/color_default</item>
+        <item name="colorPrimaryVariant">@color/color_default</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -13,5 +13,10 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/color_default</item>
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@color/color_default</item>
+    </style>
+    <style name="CustomTabLayout" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textSize"> 14sp </item>
+        <item name="android:textAllCaps"> false </item>
+        <item name="android:textStyle"> bold </item>
     </style>
 </resources>
