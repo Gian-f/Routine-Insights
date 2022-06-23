@@ -10,6 +10,7 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.example.todoapp.R
 import com.example.todoapp.databinding.FragmentLoginBinding
+import com.example.todoapp.helper.FirebaseHelper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -53,13 +54,13 @@ class LoginFragment : Fragment() {
         if (email.isNotEmpty()) {
             if (senha.isNotEmpty()) {
                 binding.progressBar.isVisible = true
-                loginUser(email,senha)
+                loginUser(email, senha)
 
             } else {
-                Toast.makeText(requireContext(),"informe sua senha.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "informe sua senha.", Toast.LENGTH_SHORT).show()
             }
         } else {
-            Toast.makeText(requireContext(),"E-mail inválido.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "E-mail inválido.", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -70,6 +71,11 @@ class LoginFragment : Fragment() {
                 if (task.isSuccessful) {
                     findNavController().navigate(R.id.action_global_homeFragment)
                 } else {
+                    Toast.makeText(
+                        requireContext(),
+                        FirebaseHelper.validError(task.exception?.message ?: ""),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     binding.progressBar.isVisible = false
                 }
             }

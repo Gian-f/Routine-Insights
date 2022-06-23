@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.todoapp.R
 import com.example.todoapp.databinding.FragmentRegisterBinding
+import com.example.todoapp.helper.FirebaseHelper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -35,7 +36,7 @@ class RegisterFragment : Fragment() {
     }
 
     private fun initClicks() {
-        binding.btnRegister.setOnClickListener {validateData()}
+        binding.btnRegister.setOnClickListener { validateData() }
     }
 
     private fun validateData() {
@@ -45,13 +46,13 @@ class RegisterFragment : Fragment() {
         if (email.isNotEmpty()) {
             if (senha.isNotEmpty()) {
                 binding.progressBar.isVisible = true
-                registerUser(email,senha)
+                registerUser(email, senha)
 
             } else {
-                Toast.makeText(requireContext(),"informe sua senha.",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "informe sua senha.", Toast.LENGTH_SHORT).show()
             }
         } else {
-            Toast.makeText(requireContext(),"informe seu e-mail.",Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "informe seu e-mail.", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -62,9 +63,14 @@ class RegisterFragment : Fragment() {
                 if (task.isSuccessful) {
                     findNavController().navigate(R.id.action_global_homeFragment)
                 } else {
+                    Toast.makeText(
+                        requireContext(),
+                        FirebaseHelper.validError(task.exception?.message ?: ""),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     binding.progressBar.isVisible = false
                 }
-        }
+            }
 
     }
 
