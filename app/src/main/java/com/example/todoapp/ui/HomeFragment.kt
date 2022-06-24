@@ -7,9 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.todoapp.R
-import com.example.todoapp.adapter.ViewPagerAdapter
+import com.example.todoapp.ui.adapter.ViewPagerAdapter
 import com.example.todoapp.databinding.FragmentHomeBinding
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
