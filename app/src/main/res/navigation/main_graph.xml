@@ -70,5 +70,10 @@
         android:id="@+id/formTaskFragment"
         android:name="com.example.todoapp.ui.FormTaskFragment"
         android:label="fragment_form_task"
-        tools:layout="@layout/fragment_form_task" />
+        tools:layout="@layout/fragment_form_task" >
+        <argument
+            android:name="task"
+            app:argType="com.example.todoapp.model.Task"
+            app:nullable="true" />
+    </fragment>
 </navigation>
