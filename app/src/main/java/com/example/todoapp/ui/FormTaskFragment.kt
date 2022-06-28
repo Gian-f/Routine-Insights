@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.todoapp.R
 import com.example.todoapp.databinding.FragmentFormTaskBinding
 import com.example.todoapp.helper.FirebaseHelper
@@ -17,6 +18,7 @@ import com.example.todoapp.model.Task
 class FormTaskFragment : Fragment() {
     private var _binding: FragmentFormTaskBinding? = null
     private val binding get() = _binding!!
+    private val args: FormTaskFragmentArgs by navArgs()
 
     private lateinit var task: Task
     private var newTask: Boolean = true
@@ -33,8 +35,42 @@ class FormTaskFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initListener()
+        getArgs()
     }
 
+    private fun getArgs() {
+        args.task.let {
+            if(it != null) {
+                task = it
+                configTask()
+            }
+        }
+    }
+
+    private fun configTask() {
+        newTask = false
+        statusTask = task.status
+        binding.textToolbar.text = "Editar Tarefa"
+
+        binding.edtDescription.setText(task.description)
+        setStatus()
+    }
+
+    private fun setStatus() {
+        binding.radioGroup.check(
+            when(task.status) {
+                0 -> {
+                    R.id.rbTodo
+                }
+                1 -> {
+                    R.id.rbDoing
+                }
+                else -> {
+                    R.id.rbDone
+                }
+            }
+        )
+    }
 
     private fun initListener() {
         binding.btnSave.setOnClickListener { validateData() }
