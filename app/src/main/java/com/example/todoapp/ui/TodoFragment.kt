@@ -75,19 +75,59 @@ class TodoFragment : Fragment() {
     private fun initAdapter() {
         binding.rvTask.layoutManager = LinearLayoutManager(requireContext())
         binding.rvTask.setHasFixedSize(true)
-        taskAdapter = TaskAdapter(requireContext(),taskList) { task, select ->
+        taskAdapter = TaskAdapter(requireContext(), taskList) { task, select ->
             optionSelect(task, select)
         }
         binding.rvTask.adapter = taskAdapter
     }
 
-    private fun optionSelect(task: Task, select:Int) {
+    private fun optionSelect(task: Task, select: Int) {
 
-        when(select) {
+        when (select) {
             TaskAdapter.SELECT_REMOVE -> {
                 deleteTask(task)
             }
+            TaskAdapter.SELECT_EDIT -> {
+                val action = HomeFragmentDirections
+                    .actionHomeFragmentToFormTaskFragment(task)
+                findNavController().navigate(action)
+            }
+            TaskAdapter.SELECT_NEXT -> {
+                task.status = 1
+                update(task)
+            }
         }
+    }
+
+    private fun update(task: Task) {
+        FirebaseHelper
+            .getDatabase()
+            .child("task")
+            .child(FirebaseHelper.getUserId() ?: "")
+            .child(task.id)
+            .setValue(task)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(
+                        requireContext(),
+                        R.string.text_task_update_sucess,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Ocorreu um erro ao salvar a tarefa",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }.addOnFailureListener {
+                binding.progressBar.isVisible = false
+                Toast.makeText(
+                    requireContext(),
+                    "Ocorreu um erro ao salvar a tarefa",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
     }
 
     private fun deleteTask(task: Task) {
