@@ -12,6 +12,7 @@ import com.example.todoapp.R
 import com.example.todoapp.databinding.FragmentLoginBinding
 import com.example.todoapp.helper.BaseFragment
 import com.example.todoapp.helper.FirebaseHelper
+import com.example.todoapp.helper.showBottomSheet
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -54,17 +55,14 @@ class LoginFragment : BaseFragment() {
 
         if (email.isNotEmpty()) {
             if (senha.isNotEmpty()) {
-
                 hideKeyboard()
-
                 binding.progressBar.isVisible = true
                 loginUser(email, senha)
-
             } else {
-                Toast.makeText(requireContext(), "informe sua senha.", Toast.LENGTH_SHORT).show()
+                showBottomSheet(message = R.string.text_password_empty_login_fragment)
             }
         } else {
-            Toast.makeText(requireContext(), "E-mail inválido.", Toast.LENGTH_SHORT).show()
+            showBottomSheet(message = R.string.text_email_empty_login_fragment)
         }
     }
 
@@ -75,11 +73,9 @@ class LoginFragment : BaseFragment() {
                 if (task.isSuccessful) {
                     findNavController().navigate(R.id.action_global_homeFragment)
                 } else {
-                    Toast.makeText(
-                        requireContext(),
-                        FirebaseHelper.validError(task.exception?.message ?: ""),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                   showBottomSheet(
+                       message =  FirebaseHelper.validError(task.exception?.message ?: "")
+                   )
                     binding.progressBar.isVisible = false
                 }
             }
