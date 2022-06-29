@@ -11,11 +11,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.todoapp.R
 import com.example.todoapp.databinding.FragmentFormTaskBinding
+import com.example.todoapp.helper.BaseFragment
 import com.example.todoapp.helper.FirebaseHelper
+import com.example.todoapp.helper.initToolbar
 import com.example.todoapp.model.Task
 
 
-class FormTaskFragment : Fragment() {
+class FormTaskFragment : BaseFragment() {
     private var _binding: FragmentFormTaskBinding? = null
     private val binding get() = _binding!!
     private val args: FormTaskFragmentArgs by navArgs()
@@ -35,6 +37,7 @@ class FormTaskFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initListener()
+        initToolbar(binding.toolbar)
         getArgs()
     }
 
@@ -88,6 +91,8 @@ class FormTaskFragment : Fragment() {
         val description = binding.edtDescription.text.toString().trim()
 
         if (description.isNotEmpty()) {
+
+            hideKeyboard()
 
             binding.progressBar.isVisible = true
 
