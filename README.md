@@ -1,7 +1,7 @@
 # Tasks-App
 An application that can make your day's more organized!
 
-##Topics covered
+## Topics covered
  - Firebase Realtime Database
  - Firebase Authentication
  - Navigation Component
