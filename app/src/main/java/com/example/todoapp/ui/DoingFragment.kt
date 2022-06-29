@@ -50,21 +50,25 @@ class DoingFragment : Fragment() {
                             val task = snap.getValue(Task::class.java) as Task
                             if (task.status == 1) taskList.add(task)
                         }
-                        binding.textInfo.text = ""
                         taskList.reverse()
                         initAdapter()
-                    } else {
-                        binding.textInfo.text = "Nenhuma tarefa cadastrada."
                     }
-
+                    taskEmpty()
                     binding.progressBar.isVisible = false
                 }
-
                 override fun onCancelled(error: DatabaseError) {
                     Toast.makeText(requireContext(), "Erro", Toast.LENGTH_SHORT).show()
                 }
 
             })
+    }
+
+    private fun taskEmpty() {
+        binding.textInfo.text = if(taskList.isEmpty()) {
+            getText(R.string.text_task_list_empty_doing_fragment)
+        } else {
+            ""
+        }
     }
 
     private fun initAdapter() {
@@ -95,7 +99,6 @@ class DoingFragment : Fragment() {
                 task.status = 2
                 update(task)
             }
-
         }
     }
 
