@@ -14,6 +14,7 @@ import com.example.todoapp.databinding.FragmentRegisterBinding
 import com.example.todoapp.helper.BaseFragment
 import com.example.todoapp.helper.FirebaseHelper
 import com.example.todoapp.helper.initToolbar
+import com.example.todoapp.helper.showBottomSheet
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -53,7 +54,7 @@ class RecoverAccountFragment : BaseFragment() {
             binding.progressBar.isVisible = true
             recoverAccountUser(email)
         } else {
-            Toast.makeText(requireContext(), "E-mail inválido.", Toast.LENGTH_SHORT).show()
+            showBottomSheet(message = R.string.text_email_empty_recover_account_fragment)
         }
     }
 
@@ -61,15 +62,11 @@ class RecoverAccountFragment : BaseFragment() {
         auth.sendPasswordResetEmail(email)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Enviamos o link para recuperação para o seu E-mail.", Toast.LENGTH_SHORT).show()
+                    showBottomSheet(message = R.string.text_email_send_sucess_recover_account_fragment)
                 } else {
-                    Toast.makeText(
-                        requireContext(),
-                        FirebaseHelper.validError(task.exception?.message ?: ""),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    showBottomSheet(
+                        message = FirebaseHelper.validError(task.exception?.message ?: "")
+                    )
                     binding.progressBar.isVisible = false
                 }
             }
