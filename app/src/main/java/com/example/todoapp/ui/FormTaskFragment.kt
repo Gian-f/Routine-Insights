@@ -53,8 +53,7 @@ class FormTaskFragment : BaseFragment() {
     private fun configTask() {
         newTask = false
         statusTask = task.status
-        binding.textToolbar.text = "Editar Tarefa"
-
+        binding.textToolbar.text = getString(R.string.text_editing_task_form_task_fragment)
         binding.edtDescription.setText(task.description)
         setStatus()
     }
