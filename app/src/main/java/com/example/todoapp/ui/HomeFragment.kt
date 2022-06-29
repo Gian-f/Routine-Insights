@@ -54,16 +54,17 @@ class HomeFragment : Fragment() {
         val adapter = ViewPagerAdapter(requireActivity())
         binding.viewPager.adapter = adapter
 
-        adapter.addFragment(TodoFragment(), "A fazer")
-        adapter.addFragment(DoingFragment(), "Fazendo")
-        adapter.addFragment(DoneFragment(), "Concluídas")
+        adapter.addFragment(TodoFragment(), R.string.status_task_todo)
+        adapter.addFragment(DoingFragment(), R.string.status_task_doing)
+        adapter.addFragment(DoneFragment(), R.string.status_task_done)
 
         binding.viewPager.offscreenPageLimit = adapter.itemCount
 
         TabLayoutMediator(
             binding.tabs, binding.viewPager
         ) { tab, position ->
-            tab.text = adapter.getTitle(position)}.attach()
+            tab.text = getString(adapter.getTitle(position))
+        }.attach()
     }
 
     override fun onDestroyView() {
