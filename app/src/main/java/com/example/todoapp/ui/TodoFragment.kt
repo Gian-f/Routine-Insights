@@ -55,13 +55,10 @@ class TodoFragment : Fragment() {
                             val task = snap.getValue(Task::class.java) as Task
                             if (task.status == 0) taskList.add(task)
                         }
-                        binding.textInfo.text = ""
                         taskList.reverse()
                         initAdapter()
-                    } else {
-                        binding.textInfo.text = "Nenhuma tarefa cadastrada."
                     }
-
+                    taskEmpty()
                     binding.progressBar.isVisible = false
                 }
 
@@ -139,6 +136,14 @@ class TodoFragment : Fragment() {
             .removeValue()
         taskList.remove(task)
         taskAdapter.notifyDataSetChanged()
+    }
+
+    private fun taskEmpty() {
+        binding.textInfo.text = if(taskList.isEmpty()) {
+            getText(R.string.text_task_list_empty_todo_fragment)
+        } else {
+            ""
+        }
     }
 
     override fun onDestroyView() {
