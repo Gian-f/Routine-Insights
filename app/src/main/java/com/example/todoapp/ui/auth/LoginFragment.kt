@@ -10,12 +10,13 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.example.todoapp.R
 import com.example.todoapp.databinding.FragmentLoginBinding
+import com.example.todoapp.helper.BaseFragment
 import com.example.todoapp.helper.FirebaseHelper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class LoginFragment : Fragment() {
+class LoginFragment : BaseFragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
@@ -53,6 +54,9 @@ class LoginFragment : Fragment() {
 
         if (email.isNotEmpty()) {
             if (senha.isNotEmpty()) {
+
+                hideKeyboard()
+
                 binding.progressBar.isVisible = true
                 loginUser(email, senha)
 
