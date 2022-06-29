@@ -13,3 +13,6 @@ Routine is an android project created with the aim of organizing your routines a
  - ConstraintLayout
  - Fragment
  - BottomSheetDialog
+ 
+ ## License
+[MIT License](./LICENSE) | [Gian Felipe](https://github.com/Gian-f)
