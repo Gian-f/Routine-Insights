@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todoapp.R
 import com.example.todoapp.databinding.FragmentDoingBinding
 import com.example.todoapp.databinding.FragmentDoneBinding
+import com.example.todoapp.helper.BaseFragment
 import com.example.todoapp.helper.FirebaseHelper
 import com.example.todoapp.model.Task
 import com.example.todoapp.ui.adapter.TaskAdapter
@@ -19,7 +20,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 
-class DoneFragment : Fragment() {
+class DoneFragment : BaseFragment() {
 
     private var _binding : FragmentDoneBinding? = null
     private val binding get() = _binding!!
@@ -53,10 +54,8 @@ class DoneFragment : Fragment() {
                         binding.textInfo.text = ""
                         taskList.reverse()
                         initAdapter()
-                    } else {
-                        binding.textInfo.text = "Nenhuma tarefa cadastrada."
                     }
-
+                    taskEmpty()
                     binding.progressBar.isVisible = false
                 }
 
@@ -65,6 +64,14 @@ class DoneFragment : Fragment() {
                 }
 
             })
+    }
+
+    private fun taskEmpty() {
+        binding.textInfo.text = if(taskList.isEmpty()) {
+            getText(R.string.text_task_list_empty_done_fragment)
+        } else {
+            ""
+        }
     }
 
     private fun initAdapter() {
