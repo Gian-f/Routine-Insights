@@ -65,7 +65,7 @@
     <string name="text_message_delete_task_done_fragment">Deseja realmente remover esta tarefa ?</string>
 
     <!--    BottomSheet-->
-    <string name="text_title_bottom_sheet">Atenção</string>
+    <string name="text_title_bottom_sheet">Atenção!</string>
     <string name="text_button_bottom_sheet">Entendi</string>
     <string name="add_button">add_Button</string>
     <!-- TODO: Remove or change this placeholder text -->
