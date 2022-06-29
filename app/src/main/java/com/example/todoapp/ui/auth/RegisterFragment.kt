@@ -9,12 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.todoapp.R
 import com.example.todoapp.databinding.FragmentRegisterBinding
+import com.example.todoapp.helper.BaseFragment
 import com.example.todoapp.helper.FirebaseHelper
+import com.example.todoapp.helper.initToolbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class RegisterFragment : Fragment() {
+class RegisterFragment : BaseFragment() {
 
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
@@ -31,6 +33,7 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initToolbar(binding.toolbar)
         auth = Firebase.auth
         initClicks()
     }
@@ -45,6 +48,9 @@ class RegisterFragment : Fragment() {
 
         if (email.isNotEmpty()) {
             if (senha.isNotEmpty()) {
+
+                hideKeyboard()
+
                 binding.progressBar.isVisible = true
                 registerUser(email, senha)
 
