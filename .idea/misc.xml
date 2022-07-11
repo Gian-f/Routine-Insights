@@ -25,6 +25,8 @@
         <entry key="..\:/Users/gianf/AndroidStudioProjects/ToDoApp/app/src/main/res/layout/layout.xml" value="0.24139492753623187" />
         <entry key="..\:/Users/gianf/AndroidStudioProjects/ToDoApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="..\:/Users/gianf/AndroidStudioProjects/ToDoApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/bottom_sheet.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_recover_account.xml" value="0.1" />
       </map>
     </option>
   </component>

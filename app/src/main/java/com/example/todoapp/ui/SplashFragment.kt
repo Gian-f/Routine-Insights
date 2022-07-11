@@ -32,13 +32,13 @@ class SplashFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Handler(Looper.getMainLooper()).postDelayed(this::chechAuth, 4000)
+        Handler(Looper.getMainLooper()).postDelayed(this::checkAuth, 3000)
+
     }
 
-
-    private fun chechAuth() {
+    private fun checkAuth() {
         auth = Firebase.auth
-        if(auth.currentUser == null) {
+        if (auth.currentUser == null) {
             findNavController().navigate(R.id.action_splashFragment_to_authentication)
         } else {
             findNavController().navigate(R.id.action_splashFragment_to_homeFragment)

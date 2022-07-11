@@ -19,8 +19,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var auth:FirebaseAuth
-
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,13 +29,12 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         auth = Firebase.auth
 
-        configLayout()
+        configTablayout()
 
         initClicks()
     }
@@ -50,7 +48,7 @@ class HomeFragment : Fragment() {
         findNavController().navigate(R.id.action_homeFragment_to_authentication)
     }
 
-    private fun configLayout() {
+    private fun configTablayout() {
         val adapter = ViewPagerAdapter(requireActivity())
         binding.viewPager.adapter = adapter
 

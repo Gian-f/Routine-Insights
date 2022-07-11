@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todoapp.R
 import com.example.todoapp.databinding.FragmentDoingBinding
 import com.example.todoapp.helper.FirebaseHelper
+import com.example.todoapp.helper.showBottomSheet
 import com.example.todoapp.model.Task
 import com.example.todoapp.ui.adapter.TaskAdapter
 import com.google.firebase.database.DataSnapshot
@@ -21,10 +22,12 @@ import com.google.firebase.database.ValueEventListener
 
 class DoingFragment : Fragment() {
 
-    private var _binding : FragmentDoingBinding? = null
+    private var _binding: FragmentDoingBinding? = null
     private val binding get() = _binding!!
-    private val taskList = mutableListOf<Task>()
+
     private lateinit var taskAdapter: TaskAdapter
+
+    private val taskList = mutableListOf<Task>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,21 +44,28 @@ class DoingFragment : Fragment() {
     }
 
     private fun getTasks() {
-        FirebaseHelper.getDatabase().child("task").child(FirebaseHelper.getUserId() ?: "")
+        FirebaseHelper
+            .getDatabase()
+            .child("task")
+            .child(FirebaseHelper.getUserId() ?: "")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         taskList.clear()
                         for (snap in snapshot.children) {
                             val task = snap.getValue(Task::class.java) as Task
+
                             if (task.status == 1) taskList.add(task)
                         }
+
                         taskList.reverse()
                         initAdapter()
                     }
-                    taskEmpty()
+
+                    tasksEmpty()
                     binding.progressBar.isVisible = false
                 }
+
                 override fun onCancelled(error: DatabaseError) {
                     Toast.makeText(requireContext(), "Erro", Toast.LENGTH_SHORT).show()
                 }
@@ -63,8 +73,8 @@ class DoingFragment : Fragment() {
             })
     }
 
-    private fun taskEmpty() {
-        binding.textInfo.text = if(taskList.isEmpty()) {
+    private fun tasksEmpty() {
+        binding.textInfo.text = if (taskList.isEmpty()) {
             getText(R.string.text_task_list_empty_doing_fragment)
         } else {
             ""
@@ -74,15 +84,14 @@ class DoingFragment : Fragment() {
     private fun initAdapter() {
         binding.rvTask.layoutManager = LinearLayoutManager(requireContext())
         binding.rvTask.setHasFixedSize(true)
-        taskAdapter = TaskAdapter(requireContext(),taskList) { task, select ->
+        taskAdapter = TaskAdapter(requireContext(), taskList) { task, select ->
             optionSelect(task, select)
         }
         binding.rvTask.adapter = taskAdapter
     }
 
-    private fun optionSelect(task: Task, select:Int) {
-
-        when(select) {
+    private fun optionSelect(task: Task, select: Int) {
+        when (select) {
             TaskAdapter.SELECT_REMOVE -> {
                 deleteTask(task)
             }
@@ -93,16 +102,16 @@ class DoingFragment : Fragment() {
             }
             TaskAdapter.SELECT_BACK -> {
                 task.status = 0
-                update(task)
+                updateTask(task)
             }
             TaskAdapter.SELECT_NEXT -> {
                 task.status = 2
-                update(task)
+                updateTask(task)
             }
         }
     }
 
-    private fun update(task: Task) {
+    private fun updateTask(task: Task) {
         FirebaseHelper
             .getDatabase()
             .child("task")
@@ -117,32 +126,50 @@ class DoingFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
-                    Toast.makeText(
-                        requireContext(),
-                        "Ocorreu um erro ao salvar a tarefa",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    showBottomSheet(message = R.string.error_generic)
                 }
             }.addOnFailureListener {
                 binding.progressBar.isVisible = false
-                Toast.makeText(
-                    requireContext(),
-                    "Ocorreu um erro ao salvar a tarefa",
-                    Toast.LENGTH_SHORT
-                ).show()
+                showBottomSheet(message = R.string.error_generic)
             }
     }
 
-
     private fun deleteTask(task: Task) {
-        FirebaseHelper
-            .getDatabase()
-            .child("task")
-            .child(FirebaseHelper.getUserId() ?: "")
-            .child(task.id)
-            .removeValue()
-        taskList.remove(task)
-        taskAdapter.notifyDataSetChanged()
+        showBottomSheet(
+            titleButton = R.string.text_button_confirm,
+            message = R.string.text_message_delete_task_doing_fragment,
+            onClick = {
+                FirebaseHelper
+                    .getDatabase()
+                    .child("task")
+                    .child(FirebaseHelper.getUserId() ?: "")
+                    .child(task.id)
+                    .removeValue()
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Toast.makeText(
+                                requireContext(),
+                                R.string.text_task_update_sucess,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            showBottomSheet(message = R.string.error_generic)
+                        }
+                    }.addOnFailureListener {
+                        binding.progressBar.isVisible = false
+                        showBottomSheet(message = R.string.error_generic)
+                    }
+
+                taskList.remove(task)
+                taskAdapter.notifyDataSetChanged()
+
+                Toast.makeText(
+                    requireContext(),
+                    R.string.text_task_delete_sucess,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        )
     }
 
     override fun onDestroyView() {

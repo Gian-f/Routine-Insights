@@ -14,7 +14,7 @@ class FirebaseHelper {
 
         fun getUserId() = getAuth().uid
 
-        fun isAuthenticate() = getAuth().currentUser != null
+        fun isAutenticated() = getAuth().currentUser != null
 
         fun validError(error: String): Int {
             return when {

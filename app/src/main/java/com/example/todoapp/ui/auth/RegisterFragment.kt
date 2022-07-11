@@ -1,11 +1,10 @@
 package com.example.todoapp.ui.auth
 
 import android.os.Bundle
-import android.provider.ContactsContract
-import android.view.*
-import android.widget.Toast
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.todoapp.R
 import com.example.todoapp.databinding.FragmentRegisterBinding
@@ -35,7 +34,9 @@ class RegisterFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initToolbar(binding.toolbar)
+
         auth = Firebase.auth
+
         initClicks()
     }
 
@@ -45,15 +46,16 @@ class RegisterFragment : BaseFragment() {
 
     private fun validateData() {
         val email = binding.edtEmail.text.toString().trim()
-        val senha = binding.edtPassword.text.toString().trim()
+        val password = binding.edtPassword.text.toString().trim()
 
         if (email.isNotEmpty()) {
-            if (senha.isNotEmpty()) {
+            if (password.isNotEmpty()) {
 
                 hideKeyboard()
 
                 binding.progressBar.isVisible = true
-                registerUser(email, senha)
+
+                registerUser(email, password)
 
             } else {
                 showBottomSheet(message = R.string.text_password_empty_register_fragment)
@@ -63,24 +65,25 @@ class RegisterFragment : BaseFragment() {
         }
     }
 
-
-    private fun registerUser(email: String, senha: String) {
-        auth.createUserWithEmailAndPassword(email, senha)
+    private fun registerUser(email: String, password: String) {
+        auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
                     findNavController().navigate(R.id.action_global_homeFragment)
                 } else {
                     showBottomSheet(
-                        message =  FirebaseHelper.validError(task.exception?.message ?: "")
+                        message = FirebaseHelper.validError(
+                            task.exception?.message ?: ""
+                        )
                     )
                     binding.progressBar.isVisible = false
                 }
             }
-
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
 }

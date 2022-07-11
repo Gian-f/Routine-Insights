@@ -1,11 +1,9 @@
 package com.example.todoapp.ui.auth
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.example.todoapp.R
@@ -34,7 +32,9 @@ class LoginFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         auth = Firebase.auth
+
         initClicks()
     }
 
@@ -44,6 +44,7 @@ class LoginFragment : BaseFragment() {
         binding.btnRegister.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
+
         binding.btnRecover.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_recoverAccountFragment)
         }
@@ -51,31 +52,38 @@ class LoginFragment : BaseFragment() {
 
     private fun validateData() {
         val email = binding.edtEmail.text.toString().trim()
-        val senha = binding.edtPassword.text.toString().trim()
+        val password = binding.edtPassword.text.toString().trim()
 
         if (email.isNotEmpty()) {
-            if (senha.isNotEmpty()) {
+            if (password.isNotEmpty()) {
+
                 hideKeyboard()
+
                 binding.progressBar.isVisible = true
-                loginUser(email, senha)
+
+                loginUser(email, password)
+
             } else {
-                showBottomSheet(message = R.string.text_password_empty_login_fragment)
+                showBottomSheet(
+                    message = R.string.text_password_empty_login_fragment
+                )
             }
         } else {
-            showBottomSheet(message = R.string.text_email_empty_login_fragment)
+            showBottomSheet(
+                message = R.string.text_email_empty_login_fragment
+            )
         }
     }
 
-
-    private fun loginUser(email: String, senha: String) {
-        auth.signInWithEmailAndPassword(email, senha)
+    private fun loginUser(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
                     findNavController().navigate(R.id.action_global_homeFragment)
                 } else {
-                   showBottomSheet(
-                       message =  FirebaseHelper.validError(task.exception?.message ?: "")
-                   )
+                    showBottomSheet(
+                        message = FirebaseHelper.validError(task.exception?.message ?: "")
+                    )
                     binding.progressBar.isVisible = false
                 }
             }

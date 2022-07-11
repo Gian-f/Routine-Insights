@@ -21,6 +21,7 @@ import com.google.firebase.ktx.Firebase
 
 
 class RecoverAccountFragment : BaseFragment() {
+
     private var _binding: FragmentRecoverAccountBinding? = null
     private val binding get() = _binding!!
 
@@ -37,7 +38,9 @@ class RecoverAccountFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initToolbar(binding.toolbar)
+
         auth = Firebase.auth
+
         initClicks()
     }
 
@@ -47,11 +50,12 @@ class RecoverAccountFragment : BaseFragment() {
 
     private fun validateData() {
         val email = binding.edtEmail.text.toString().trim()
-        if (email.isNotEmpty()) {
 
+        if (email.isNotEmpty()) {
             hideKeyboard()
 
             binding.progressBar.isVisible = true
+
             recoverAccountUser(email)
         } else {
             showBottomSheet(message = R.string.text_email_empty_recover_account_fragment)
@@ -62,13 +66,16 @@ class RecoverAccountFragment : BaseFragment() {
         auth.sendPasswordResetEmail(email)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
-                    showBottomSheet(message = R.string.text_email_send_sucess_recover_account_fragment)
+                    showBottomSheet(
+                        message = R.string.text_email_send_sucess_recover_account_fragment
+                    )
                 } else {
                     showBottomSheet(
                         message = FirebaseHelper.validError(task.exception?.message ?: "")
                     )
-                    binding.progressBar.isVisible = false
                 }
+
+                binding.progressBar.isVisible = false
             }
     }
 
@@ -76,4 +83,5 @@ class RecoverAccountFragment : BaseFragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }
